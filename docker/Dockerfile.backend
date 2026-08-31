@@ -1,0 +1,35 @@
+# CPU image by default. For GPU, swap the base for
+# pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime and drop the CPU index URL below.
+FROM python:3.11-slim AS base
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    CXR_CONFIG=/app/configs/default.yaml
+
+WORKDIR /app
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 curl \
+ && rm -rf /var/lib/apt/lists/*
+
+# torch first, from the CPU wheel index, so the image stays ~1 GB instead of ~6 GB
+RUN pip install --index-url https://download.pytorch.org/whl/cpu torch==2.4.1 torchvision==0.19.1
+
+COPY backend/pyproject.toml /app/backend/pyproject.toml
+COPY backend/cxr/__init__.py /app/backend/cxr/__init__.py
+RUN pip install -e /app/backend
+
+COPY backend /app/backend
+COPY configs /app/configs
+
+RUN useradd --create-home --uid 10001 cxr \
+ && mkdir -p /app/models /app/artifacts /app/data \
+ && chown -R cxr /app
+USER cxr
+
+EXPOSE 8000
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s \
+  CMD curl -fsS http://localhost:8000/api/health || exit 1
+
+CMD ["uvicorn", "cxr.api.app:app", "--host", "0.0.0.0", "--port", "8000"]

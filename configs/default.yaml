@@ -1,0 +1,46 @@
+# Base configuration. Override with `--config`, the CXR_CONFIG env var, or CXR_* env vars.
+app_name: Foreign Object Detection in Chest X-Rays
+environment: development
+device: auto            # auto | cpu | cuda | cuda:0 | mps
+
+data:
+  # Point this at the extracted object-CXR dataset:
+  #   <root>/train/*.jpg, <root>/dev/*.jpg, <root>/train.csv, <root>/dev.csv
+  root: data/object-CXR
+  image_size: 600
+  train_on_positives_only: true   # the notebook dropped un-annotated training images
+  num_workers: 0                  # >0 needs a __main__ guard on Windows
+  batch_size: 8
+
+frcnn:
+  weights: models/frcnn/model.pt
+  input_size: 600
+  conf_threshold: 0.5
+  max_detections: 100
+
+yolo:
+  weights: models/yolo/best.pt
+  input_size: 480
+  conf_threshold: 0.25
+  max_detections: 100
+
+training:
+  epochs: 5
+  lr: 0.005
+  momentum: 0.9
+  weight_decay: 0.0005
+  lr_step_size: 5
+  lr_gamma: 0.1
+  print_freq: 50
+  seed: 0
+  yolo_base_weights: yolov8n.pt
+  yolo_epochs: 10
+  yolo_imgsz: 480
+  yolo_batch: 16
+
+cors_origins:
+  - http://localhost:5173
+  - http://127.0.0.1:5173
+max_upload_bytes: 20971520
+max_batch_files: 32
+demo_mode_enabled: true

@@ -1,0 +1,12 @@
+**/node_modules
+**/dist
+**/__pycache__
+**/*.egg-info
+.git
+.venv
+data
+artifacts
+models/**/*.pt
+notebooks
+*.mp4
+*.zip

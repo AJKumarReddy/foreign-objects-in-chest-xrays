@@ -1,0 +1,10 @@
+# YOLO training profile (ultralytics).
+device: auto
+data:
+  image_size: 600
+training:
+  seed: 0
+  yolo_base_weights: yolov8n.pt
+  yolo_epochs: 10
+  yolo_imgsz: 480
+  yolo_batch: 16

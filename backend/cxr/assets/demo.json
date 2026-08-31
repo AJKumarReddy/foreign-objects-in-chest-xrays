@@ -1,0 +1,176 @@
+{
+  "note": "Synthetic phantoms and recorded detections used for demo mode only. Not patient data and not real model output.",
+  "samples": [
+    {
+      "id": "phantom-coin",
+      "filename": "phantom-coin.png",
+      "title": "Coin over right lung field",
+      "description": "Synthetic phantom with a single high-density circular object.",
+      "width": 1024,
+      "height": 1024,
+      "synthetic": true,
+      "detections": {
+        "frcnn": [
+          {
+            "box": [
+              313.0,
+              382.1,
+              406.8,
+              473.6
+            ],
+            "score": 0.94
+          }
+        ],
+        "yolo": [
+          {
+            "box": [
+              314.3,
+              382.8,
+              401.9,
+              476.1
+            ],
+            "score": 0.89
+          }
+        ]
+      }
+    },
+    {
+      "id": "phantom-necklace",
+      "filename": "phantom-necklace.png",
+      "title": "Necklace and buttons",
+      "description": "Synthetic phantom with a chain across the upper thorax plus two buttons.",
+      "width": 1024,
+      "height": 1024,
+      "synthetic": true,
+      "detections": {
+        "frcnn": [
+          {
+            "box": [
+              280.2,
+              272.3,
+              720.2,
+              368.9
+            ],
+            "score": 0.94
+          },
+          {
+            "box": [
+              395.7,
+              607.3,
+              462.5,
+              672.9
+            ],
+            "score": 0.82
+          },
+          {
+            "box": [
+              585.5,
+              671.6,
+              645.3,
+              729.6
+            ],
+            "score": 0.71
+          }
+        ],
+        "yolo": [
+          {
+            "box": [
+              313.3,
+              268.3,
+              747.3,
+              369.3
+            ],
+            "score": 0.89
+          },
+          {
+            "box": [
+              393.6,
+              603.4,
+              462.7,
+              676.1
+            ],
+            "score": 0.77
+          },
+          {
+            "box": [
+              583.1,
+              670.5,
+              645.8,
+              729.2
+            ],
+            "score": 0.65
+          }
+        ]
+      }
+    },
+    {
+      "id": "phantom-wire",
+      "filename": "phantom-wire.png",
+      "title": "Monitoring lead across the chest",
+      "description": "Synthetic phantom with an elongated wire-like object.",
+      "width": 1024,
+      "height": 1024,
+      "synthetic": true,
+      "detections": {
+        "frcnn": [
+          {
+            "box": [
+              166.1,
+              510.7,
+              866.9,
+              638.5
+            ],
+            "score": 0.94
+          }
+        ],
+        "yolo": [
+          {
+            "box": [
+              177.0,
+              513.1,
+              872.6,
+              641.8
+            ],
+            "score": 0.89
+          }
+        ]
+      }
+    },
+    {
+      "id": "phantom-clear",
+      "filename": "phantom-clear.png",
+      "title": "No foreign object",
+      "description": "Synthetic phantom with nothing overlying the chest - the negative case.",
+      "width": 1024,
+      "height": 1024,
+      "synthetic": true,
+      "detections": {
+        "frcnn": [],
+        "yolo": []
+      }
+    },
+    {
+      "id": "phantom-pin",
+      "filename": "phantom-pin.png",
+      "title": "Safety pin, low contrast",
+      "description": "Synthetic phantom with a small object near the diaphragm.",
+      "width": 1024,
+      "height": 1024,
+      "synthetic": true,
+      "detections": {
+        "frcnn": [
+          {
+            "box": [
+              531.6,
+              731.3,
+              670.4,
+              788.7
+            ],
+            "score": 0.94
+          }
+        ],
+        "yolo": []
+      }
+    }
+  ]
+}

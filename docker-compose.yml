@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.backend
+    environment:
+      CXR_DEVICE: ${CXR_DEVICE:-auto}
+      CXR_ENVIRONMENT: production
+      CXR_CORS_ORIGINS: http://localhost:8080
+    volumes:
+      # drop trained checkpoints here; evaluation artefacts are written back
+      - ./models:/app/models
+      - ./artifacts:/app/artifacts
+      - ./data:/app/data:ro
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+    restart: unless-stopped

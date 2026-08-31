@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Data, weights and run outputs (never commit these)
+data/
+models/**
+!models/README.md
+artifacts/
+runs/
+*.pt
+*.pth
+*.onnx
+
+# Local config and editors
+.env
+.env.local
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+frontend/tsconfig.tsbuildinfo
+*.tsbuildinfo
