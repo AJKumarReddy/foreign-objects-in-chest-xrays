@@ -23,8 +23,10 @@ def build_faster_rcnn(num_classes: int = NUM_CLASSES, pretrained_backbone: bool 
     """Create the detection model with a fresh box predictor head.
 
     ``pretrained=True`` was removed from torchvision; the modern spelling is an
-    explicit weights enum, and ``None`` keeps the network random-initialised
-    (which is what we want when we are about to load our own checkpoint).
+    explicit weights enum. With ``pretrained_backbone=False`` both the detection
+    weights and the ImageNet backbone are left unset - otherwise torchvision
+    quietly downloads a 98 MB ResNet50 that our own checkpoint overwrites a
+    moment later, which breaks offline and container startups.
     """
 
     weights = (
@@ -32,7 +34,12 @@ def build_faster_rcnn(num_classes: int = NUM_CLASSES, pretrained_backbone: bool 
         if pretrained_backbone
         else None
     )
-    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(weights=weights)
+    weights_backbone = (
+        torchvision.models.ResNet50_Weights.IMAGENET1K_V1 if pretrained_backbone else None
+    )
+    model = torchvision.models.detection.fasterrcnn_resnet50_fpn(
+        weights=weights, weights_backbone=weights_backbone
+    )
     in_features = model.roi_heads.box_predictor.cls_score.in_features
     model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
     return model
